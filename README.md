@@ -4,15 +4,8 @@ Deep Complex Networks
 This repository contains code which reproduces experiments presented in
 the paper [Deep Complex Networks](https://arxiv.org/abs/1705.09792).
 
-Requirements
-------------
 
-Install requirements for computer vision experiments with pip:
-```
-pip install numpy Theano keras kerosene
-```
-
-And for music experiments:
+music experiments (Not supported yet):
 ```
 pip install scipy sklearn intervaltree resampy
 pip install git+git://github.com/bartvm/mimir.git
@@ -24,8 +17,18 @@ Depending on your Python installation you might want to use anaconda or other to
 Installation
 ------------
 
+from root directory(deep_complex_networks)
+
+For GPU trainig 
 ```
-pip install .
+make build 
+make run
+```
+
+For CPU
+```
+make build_cpu
+make run_cpu
 ```
 
 Experiments
