@@ -9,7 +9,6 @@ from keras import activations, initializers, regularizers, constraints
 from keras.layers import Lambda, Layer, InputSpec, Convolution1D, Convolution2D, add, multiply, Activation, Input, concatenate
 from keras.layers.convolutional import _Conv
 from keras.layers.merge import _Merge
-from keras.layers.recurrent import Recurrent
 from keras.utils import conv_utils
 from keras.models import Model
 import numpy as np
@@ -145,7 +144,7 @@ class ComplexConv(Layer):
         self.kernel_size = conv_utils.normalize_tuple(kernel_size, rank, 'kernel_size')
         self.strides = conv_utils.normalize_tuple(strides, rank, 'strides')
         self.padding = conv_utils.normalize_padding(padding)
-        self.data_format = 'channels_last' if rank == 1 else conv_utils.normalize_data_format(data_format)
+        self.data_format = 'channels_last' if rank == 1 else K.normalize_data_format(data_format)
         self.dilation_rate = conv_utils.normalize_tuple(dilation_rate, rank, 'dilation_rate')
         self.activation = activations.get(activation)
         self.use_bias = use_bias
@@ -203,7 +202,7 @@ class ComplexConv(Layer):
             kern_init = self.kernel_initializer
         
         self.kernel = self.add_weight(
-            self.kernel_shape,
+            shape=self.kernel_shape,
             initializer=kern_init,
             name='kernel',
             regularizer=self.kernel_regularizer,
@@ -766,7 +765,7 @@ class ComplexConv3D(ComplexConv):
         `(samples, conv_dim1, conv_dim2, conv_dim3, channels)` if data_format='channels_last'.
     # Output shape
         5D tensor with shape:
-        `(samples, 2 x filters, new_conv_dim1, new_conv_dim2, new_conv_dim3)` if data_format='channels_first'
+        `(samples, 2 x filters, new_conv_dim1, new_conv_dim2, channels_first)` if data_format='channels_first'
         or 5D tensor with shape:
         `(samples, new_conv_dim1, new_conv_dim2, new_conv_dim3, 2 x filters)` if data_format='channels_last'.
         `new_conv_dim1`, `new_conv_dim2` and `new_conv_dim3` values might have changed due to padding.

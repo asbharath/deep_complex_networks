@@ -25,7 +25,7 @@ from   keras.regularizers                    import l2
 from   keras.utils.np_utils                  import to_categorical
 import keras.backend                         as     K
 import keras.models                          as     KM
-from   kerosene.datasets                     import svhn2
+# from   kerosene.datasets                     import svhn2
 import logging                               as     L
 import numpy                                 as     np
 import os, pdb, socket, sys, time
@@ -150,7 +150,7 @@ def getResnetModel(d):
 	activation    = d.act
 	advanced_act  = d.aact
 	drop_prob     = d.dropout
-	inputShape    = (3, 32, 32) if K.image_dim_ordering() == "th" else (32, 32, 3)
+	inputShape    = (3, 32, 32) if K.image_data_format() == "channels_first" else (32, 32, 3)
 	channelAxis   = 1 if K.image_data_format() == 'channels_first' else -1
 	filsize       = (3, 3)
 	convArgs      = {
@@ -196,7 +196,7 @@ def getResnetModel(d):
 	# Stage 2
 	#
 	
-	for i in xrange(n):
+	for i in range(n):
 		O = getResidualBlock(O, filsize, [sf, sf], 2, str(i), 'regular', convArgs, bnArgs, d)
 		if i == n//2 and d.spectral_pool_scheme == "stagemiddle":
 			O = applySpectralPooling(O, d)
@@ -209,7 +209,7 @@ def getResnetModel(d):
 	if d.spectral_pool_scheme == "nodownsample":
 		O = applySpectralPooling(O, d)
 	
-	for i in xrange(n-1):
+	for i in range(n-1):
 		O = getResidualBlock(O, filsize, [sf*2, sf*2], 3, str(i+1), 'regular', convArgs, bnArgs, d)
 		if i == n//2 and d.spectral_pool_scheme == "stagemiddle":
 			O = applySpectralPooling(O, d)
@@ -222,7 +222,7 @@ def getResnetModel(d):
 	if d.spectral_pool_scheme == "nodownsample":
 		O = applySpectralPooling(O, d)
 	
-	for i in xrange(n-1):
+	for i in range(n-1):
 		O = getResidualBlock(O, filsize, [sf*4, sf*4], 4, str(i+1), 'regular', convArgs, bnArgs, d)
 		if i == n//2 and d.spectral_pool_scheme == "stagemiddle":
 			O = applySpectralPooling(O, d)
@@ -251,8 +251,8 @@ def getResnetModel(d):
 		O = Dense(10,  activation='softmax', kernel_regularizer=l2(0.0001))(O)
 	elif dataset == 'cifar100':
 		O = Dense(100, activation='softmax', kernel_regularizer=l2(0.0001))(O)
-	elif dataset == 'svhn':
-		O = Dense(10,  activation='softmax', kernel_regularizer=l2(0.0001))(O)
+	# elif dataset == 'svhn':
+	# 	O = Dense(10,  activation='softmax', kernel_regularizer=l2(0.0001))(O)
 	else:
 		raise ValueError("Unknown dataset "+d.dataset)
 	
@@ -530,13 +530,13 @@ def train(d):
 		(X_train, y_train), (X_test, y_test) = cifar100.load_data()
 		nb_classes                           = 100
 		n_train                              = 45000
-	elif d.dataset == 'svhn':
-		(X_train, y_train), (X_test, y_test) = svhn2.load_data()
-		nb_classes                           = 10
-		# Make classes 0 - 9 instead of 1 - 10
-		y_train                              = y_train - 1
-		y_test                               = y_test  - 1
-		n_train                              = 65000
+	# elif d.dataset == 'svhn':
+	# 	(X_train, y_train), (X_test, y_test) = svhn2.load_data()
+	# 	nb_classes                           = 10
+	# 	# Make classes 0 - 9 instead of 1 - 10
+	# 	y_train                              = y_train - 1
+	# 	y_test                               = y_test  - 1
+	# 	n_train                              = 65000
 	
 	#
 	# Compute and Shuffle Training/Validation/Test Split

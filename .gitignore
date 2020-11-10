@@ -34,3 +34,4 @@
 **/*.yaml
 **/*.npy
 **/slurm-*.out
+.vscode
