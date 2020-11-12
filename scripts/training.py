@@ -165,7 +165,7 @@ def getResnetModel(d):
 	}
 	
 	if   d.model == "real":
-		sf *= 2
+		# sf *= 2
 		convArgs.update({"kernel_initializer": Orthogonal(float(np.sqrt(2)))})
 	elif d.model == "complex":
 		convArgs.update({"spectral_parametrization": d.spectral_param,
@@ -636,6 +636,7 @@ def train(d):
 	
 	if d.summary:
 		model.summary()
+	keras.utils.plot_model(model, to_file="/tmp/model.png",show_shapes=True)
 	L.getLogger("entry").info("# of Parameters:              {:10d}".format(model.count_params()))
 	L.getLogger("entry").info("Compiling Train   Function...")
 	t =- time.time()
