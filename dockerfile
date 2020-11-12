@@ -1,4 +1,5 @@
 #TODO consolidate the RUNS and reduce creating layers. 
+# Theano doesn't support cudnn version above 7.  
 FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
 
 ENV PATH="/root/miniconda3/bin:${PATH}"

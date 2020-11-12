@@ -1,5 +1,3 @@
-
-
 # Theano GPU 
 FROM ubuntu:18.04
 
@@ -19,15 +17,3 @@ RUN apt-get update && apt-get install -y \
   --no-deps git+git://github.com/Theano/Theano.git \
   scipy \
   keras==2.2.5
-  
-
-# # Install bleeding-edge Theano
-# RUN pip install --upgrade pip
-# RUN pip install --upgrade six
-# RUN pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
-# RUN pip install scipy keras==2.2.5
-
-# COPY scripts /opt/src
-# COPY scripts/training.py /opt/src/training.py
-# WORKDIR /opt
-# CMD python /opt/src/training.py

@@ -165,7 +165,9 @@ def getResnetModel(d):
 	}
 	
 	if   d.model == "real":
-		# sf *= 2
+		# The below if uncommented is causing the overall paramters for WS real to be ~7M which is not 
+		# reported in the paper. The value mentioned in the paper is roughly 1.7M. 
+		# sf *= 2 
 		convArgs.update({"kernel_initializer": Orthogonal(float(np.sqrt(2)))})
 	elif d.model == "complex":
 		convArgs.update({"spectral_parametrization": d.spectral_param,
@@ -634,9 +636,9 @@ def train(d):
 	# Precompile several backend functions
 	#
 	
-	if d.summary:
-		model.summary()
-	keras.utils.plot_model(model, to_file="/tmp/model.png",show_shapes=True)
+	# if d.summary:
+	# 	model.summary()
+	keras.utils.plot_model(model, to_file=os.path.join(d.workdir,"model.png"),show_shapes=True)
 	L.getLogger("entry").info("# of Parameters:              {:10d}".format(model.count_params()))
 	L.getLogger("entry").info("Compiling Train   Function...")
 	t =- time.time()

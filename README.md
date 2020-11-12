@@ -4,6 +4,7 @@ Deep Complex Networks
 This repository contains code which reproduces experiments presented in
 the paper [Deep Complex Networks](https://arxiv.org/abs/1705.09792).
 
+The code is updated to run with python3. For ease of use, run the docker as per the instruction in the section Installation
 
 music experiments (Not supported yet):
 ```
