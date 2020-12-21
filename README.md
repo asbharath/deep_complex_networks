@@ -49,6 +49,26 @@ Experiments
     python scripts/run.py train -w WORKDIR --model {real,complex} --sf STARTFILTER --nb NUMBEROFBLOCKSPERSTAGE
     ```
 
+    ```
+    # wide shallow real
+    python scripts/run.py train -w WORKDIR --model real --sf 18 --nb 14
+
+    # wide shallow complex
+    python scripts/run.py train -w WORKDIR --model complex --sf 12 --nb 16
+
+    # deep narrow real 
+    python scripts/run.py train -w WORKDIR --model real --sf 14 --nb 23
+
+    # deep narrow complex 
+    python scripts/run.py train -w WORKDIR --model complex --sf 10 --nb 23
+
+    # in between real 
+    python scripts/run.py train -w WORKDIR --model real --sf 16 --nb 18
+
+    # in between complex 
+    python scripts/run.py train -w WORKDIR --model complex --sf 11 --nb 19
+    ```
+
     Other arguments may be added as well; Refer to run.py train --help for
     
       - Optimizer settings
